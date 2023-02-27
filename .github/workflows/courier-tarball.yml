@@ -1,12 +1,15 @@
 name: Release of courier debs
-run-name: ${{github.actor}} is working with GitHub Actions
+
+on:
+  push:
+    branches: [main]
+
+run-name: ${{ github.actor }} is working with GitHub Actions
+
 env:
   UNICODE_VER: 2.2.6
   AUTHLIB_VER: 0.72.0
   COURIER_VER: 1.2.2
-on:
-  - push:
-      branches: [main]
 jobs:
   Install-Prerequiesites:
     #  ubuntu-latest should be 20.04
