@@ -18,6 +18,7 @@ jobs:
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
     runs-on: ubuntu-latest
     steps:
+      - run: getent passwd
       - run: sudo mkdir -p ${{ env.DEBS }} ${{ env.BUILD }}; sudo chown -R ubuntu:ubuntu ${{ env.DEBS }} ${{ env.BUILD }}
       - run: sudo apt-get update
       - run: sudo apt install -y less autoconf automake libtool xsltproc docbook docbook-xml docbook-xsl w3c-sgml-lib elinks tidy libldap2-dev libmariadb-dev libz-dev libsqlite3-dev libpq-dev libgdbm-dev libpam0g-dev expect libltdl-dev curl sysconftool git gettext bzip2 devscripts debhelper libmariadb-dev-compat libidn2-dev debhelper-compat pkg-config gnutls-dev gnutls-bin libpcre2-dev libgcrypt-dev locales locales-all mime-support wget ghostscript mgetty-fax netpbm aspell libaspell-dev libperl-dev
