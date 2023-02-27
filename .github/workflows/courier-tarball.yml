@@ -30,7 +30,7 @@ jobs:
       - run: cd ${{ env.BUILD }};curl -L https://sourceforge.net/projects/courier/files/courier/${{ env.COURIER_VER }}/courier-${{ env.COURIER_VER }}.tar.bz2/download >  courier-${{ env.COURIER_VER }}.tar.bz2 && tar -xjf courier-${{ env.COURIER_VER }}.tar.bz2 && cd courier-${{ env.COURIER_VER }} && ./courier-debuild -us -uc && cp deb/*.deb ${{ env.DEBS }}; sudo apt install -y ${{ env.DEBS }}/*.deb
 
       - name: Bundle tar
-        run: tar -cjf ${{ env.BUILD }}/courier-${{ github.ref_name }}.tar.bz2
+        run: tar -cjf ${{ env.BUILD }}/courier-${{ github.ref_name }}.tar.bz2 ${{ env.DEBS }}
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
