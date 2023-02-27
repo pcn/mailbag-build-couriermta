@@ -12,14 +12,16 @@ env:
   COURIER_VER: 1.2.2
   DEBS: "/debs"
   BUILD: "/build"
+  USER: "runner"
+  GROUP: "runner"
 jobs:
   Install-Prerequiesites:
     #  ubuntu-latest should be 20.04
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
     runs-on: ubuntu-latest
     steps:
-      - run: getent passwd
-      - run: sudo mkdir -p ${{ env.DEBS }} ${{ env.BUILD }}; sudo chown -R ubuntu:ubuntu ${{ env.DEBS }} ${{ env.BUILD }}
+      - run: getent passwd; getent group
+      - run: sudo mkdir -p ${{ env.DEBS }} ${{ env.BUILD }}; sudo chown -R ${{ env.USER }}:${{ env.GROUP }} ${{ env.DEBS }} ${{ env.BUILD }}
       - run: sudo apt-get update
       - run: sudo apt install -y less autoconf automake libtool xsltproc docbook docbook-xml docbook-xsl w3c-sgml-lib elinks tidy libldap2-dev libmariadb-dev libz-dev libsqlite3-dev libpq-dev libgdbm-dev libpam0g-dev expect libltdl-dev curl sysconftool git gettext bzip2 devscripts debhelper libmariadb-dev-compat libidn2-dev debhelper-compat pkg-config gnutls-dev gnutls-bin libpcre2-dev libgcrypt-dev locales locales-all mime-support wget ghostscript mgetty-fax netpbm aspell libaspell-dev libperl-dev
       - run: cd ${{ env.BUILD }};curl -L https://sourceforge.net/projects/courier/files/courier-unicode/${{ env.UNICODE_VER }}/courier-unicode-${{ env.UNICODE_VER }}.tar.bz2/download >  courier-unicode-${{ env.UNICODE_VER }}.tar.bz2 && tar -xjf courier-unicode-${{ env.UNICODE_VER }}.tar.bz2 && cd courier-unicode-${{ env.UNICODE_VER }} && ./courier-debuild -us -uc && mv deb/*.deb ${{ env.DEBS }}; sudo apt install -y ${{ env.DEBS }}/*.deb
