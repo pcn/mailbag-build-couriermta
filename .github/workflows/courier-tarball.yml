@@ -16,7 +16,7 @@ jobs:
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
     runs-on: ubuntu-latest
     steps:
-      - run: mkdir /debs /build
+      - run: mkdir -p /tmp/debs /tmp/build
       - run: apt-get update
       - run: apt install -y less autoconf automake libtool xsltproc docbook docbook-xml docbook-xsl w3c-sgml-lib elinks tidy libldap2-dev libmariadb-dev libz-dev libsqlite3-dev libpq-dev libgdbm-dev libpam0g-dev expect libltdl-dev curl sysconftool git gettext bzip2 devscripts debhelper libmariadb-dev-compat libidn2-dev debhelper-compat pkg-config gnutls-dev gnutls-bin libpcre2-dev libgcrypt-dev locales locales-all mime-support wget ghostscript mgetty-fax netpbm aspell libaspell-dev libperl-dev
       - run: cd /build;curl -L https://sourceforge.net/projects/courier/files/courier-unicode/${{ env.UNICODE_VER }}/courier-unicode-${{ env.UNICODE_VER }}.tar.bz2/download >  courier-unicode-${{ env.UNICODE_VER }}.tar.bz2 && tar -xjf courier-unicode-${{ env.UNICODE_VER }}.tar.bz2 && cd courier-unicode-${{ env.UNICODE_VER }} && ./courier-debuild -us -uc && mv deb/*.deb /debs; apt install -y /debs/*.deb
