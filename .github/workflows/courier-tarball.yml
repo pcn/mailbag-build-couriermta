@@ -32,7 +32,7 @@ jobs:
       - name: Bundle tar
         run: tar -cjf ${{ env.BUILD }}/courier-${{ github.ref_name }}.tar.bz2
       - name: Release
-        uses: softprops/action-gh-release@1
+        uses: softprops/action-gh-release@v1
         with:
           files: ${{ env.BUILD }}/courier-${{ github.ref_name }}.tar.bz2
         env:
