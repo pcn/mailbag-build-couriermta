@@ -2,7 +2,8 @@ name: Release of courier debs
 
 on:
   push:
-
+    tags:
+      - 'v*'
 
 run-name: ${{ github.actor }} is working with GitHub Actions
 
@@ -27,3 +28,12 @@ jobs:
       - run: cd ${{ env.BUILD }};curl -L https://sourceforge.net/projects/courier/files/courier-unicode/${{ env.UNICODE_VER }}/courier-unicode-${{ env.UNICODE_VER }}.tar.bz2/download >  courier-unicode-${{ env.UNICODE_VER }}.tar.bz2 && tar -xjf courier-unicode-${{ env.UNICODE_VER }}.tar.bz2 && cd courier-unicode-${{ env.UNICODE_VER }} && ./courier-debuild -us -uc && mv deb/*.deb ${{ env.DEBS }}; sudo apt install -y ${{ env.DEBS }}/*.deb
       - run: cd ${{ env.BUILD }};curl -L https://sourceforge.net/projects/courier/files/authlib/${{ env.AUTHLIB_VER }}/courier-authlib-${{ env.AUTHLIB_VER }}.tar.bz2/download >  courier-authlib-${{ env.AUTHLIB_VER }}.tar.bz2 && tar -xjf courier-authlib-${{ env.AUTHLIB_VER }}.tar.bz2 && cd courier-authlib-${{ env.AUTHLIB_VER }} && ./courier-debuild -us -uc && mv deb/*.deb ${{ env.DEBS }}; sudo apt install -y ${{ env.DEBS }}/*.deb
       - run: cd ${{ env.BUILD }};curl -L https://sourceforge.net/projects/courier/files/courier/${{ env.COURIER_VER }}/courier-${{ env.COURIER_VER }}.tar.bz2/download >  courier-${{ env.COURIER_VER }}.tar.bz2 && tar -xjf courier-${{ env.COURIER_VER }}.tar.bz2 && cd courier-${{ env.COURIER_VER }} && ./courier-debuild -us -uc && cp deb/*.deb ${{ env.DEBS }}; sudo apt install -y ${{ env.DEBS }}/*.deb
+
+      - name: Bundle tar
+        run: tar -cjf ${{ env.BUILD }}/courier-${{ github.ref_name }}.tar.bz2
+      - name: Release
+        uses: softprops/action-gh-releases@1
+        with:
+          files: ${{ env.BUILD }}/courier-${{ github.ref_name }}.tar.bz2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
