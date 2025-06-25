@@ -8,9 +8,9 @@ on:
 run-name: ${{ github.actor }} is working with GitHub Actions
 
 env:
-  UNICODE_VER: 2.2.6
-  AUTHLIB_VER: 0.72.0
-  COURIER_VER: 1.2.2
+  UNICODE_VER: 2.3.2
+  AUTHLIB_VER: 0.72.4
+  COURIER_VER: 1.4.1
   DEBS: "/debs"
   BUILD: "/build"
   USER: "runner"
